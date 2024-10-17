@@ -27,6 +27,7 @@ func spawn_level(data):
 func _on_host_button_pressed() -> void:
 	Steam.createLobby(Steam.LOBBY_TYPE_PUBLIC, 8)
 	
+	await get_tree().create_timer(1).timeout
 	
 	var peer : SteamMultiplayerPeer = SteamMultiplayerPeer.new()
 	var err = peer.create_host(0)
@@ -47,6 +48,7 @@ func _on_join_button_pressed() -> void:
 
 func join_lobby(id):
 	Steam.joinLobby(id)
+	await get_tree().create_timer(1).timeout
 	var peer : SteamMultiplayerPeer = SteamMultiplayerPeer.new()
 	var err = peer.create_client(Steam.getLobbyOwner(id), 0)
 	

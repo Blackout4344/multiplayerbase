@@ -43,7 +43,7 @@ func _ready():
 		nametag.text = Steam.getPersonaName()
 		await get_tree().process_frame
 		global_position = get_tree().current_scene.get_node("Main").marker.global_position
-	
+		camera.make_current()
 
 
 
