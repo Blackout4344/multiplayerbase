@@ -1,0 +1,61 @@
+[gd_scene load_steps=11 format=3 uid="uid://6f0w046qwwq0"]
+
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_31e61"]
+[ext_resource type="Texture2D" uid="uid://b1lq1thvjgnbr" path="res://Sprites/Screenshot 2024-10-17 at 1.37.44 PM.png" id="1_krtad"]
+[ext_resource type="Script" path="res://Scripts/player_spawner.gd" id="2_pj5cb"]
+[ext_resource type="PackedScene" uid="uid://do88nem1k7t3o" path="res://Scenes/player.tscn" id="3_od0b6"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_83sua"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_07o30"]
+sky_material = SubResource("ProceduralSkyMaterial_83sua")
+
+[sub_resource type="Environment" id="Environment_0k5hx"]
+background_mode = 2
+sky = SubResource("Sky_07o30")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_i8o5k"]
+size = Vector3(100, 0.1, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5djou"]
+albedo_color = Color(0.43712, 0.43712, 0.43712, 1)
+albedo_texture = ExtResource("1_krtad")
+metallic = 1.0
+uv1_triplanar = true
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_qyi6l"]
+data = PackedVector3Array(-50, 0.05, 50, 50, 0.05, 50, -50, -0.05, 50, 50, 0.05, 50, 50, -0.05, 50, -50, -0.05, 50, 50, 0.05, -50, -50, 0.05, -50, 50, -0.05, -50, -50, 0.05, -50, -50, -0.05, -50, 50, -0.05, -50, 50, 0.05, 50, 50, 0.05, -50, 50, -0.05, 50, 50, 0.05, -50, 50, -0.05, -50, 50, -0.05, 50, -50, 0.05, -50, -50, 0.05, 50, -50, -0.05, -50, -50, 0.05, 50, -50, -0.05, 50, -50, -0.05, -50, 50, 0.05, 50, -50, 0.05, 50, 50, 0.05, -50, -50, 0.05, 50, -50, 0.05, -50, 50, 0.05, -50, -50, -0.05, 50, 50, -0.05, 50, -50, -0.05, -50, 50, -0.05, 50, 50, -0.05, -50, -50, -0.05, -50)
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_31e61")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0k5hx")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.78989, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_i8o5k")
+surface_material_override/0 = SubResource("StandardMaterial3D_5djou")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_qyi6l")
+
+[node name="PlayersNode" type="Node3D" parent="."]
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/player.tscn")
+spawn_path = NodePath("../PlayersNode")
+script = ExtResource("2_pj5cb")
+PLAYER = ExtResource("3_od0b6")
