@@ -12,12 +12,12 @@ var current_vel = Vector3.ZERO
 var dir = Vector3.ZERO
 var sync_pos : Vector3
 
-const SPEED = 4#*3
-const SPRINT_SPEED = 8#*3
+const SPEED = 4*10
+const SPRINT_SPEED = 8*10
 const ACCEL = 10.0
 const AIR_ACCEL = 8.0
 var GRAVITY = -20
-const JUMP_SPEED = 10
+const JUMP_SPEED = 10 * 3
 var MOUSE_SENSITIVITY = 0.1
 var jumping = false
 var on_floor = false
@@ -51,6 +51,8 @@ func _process(_delta):
 		return
 	
 	window_activity()
+	
+	#position = Vector3.ZERO
 	
 	
 	
