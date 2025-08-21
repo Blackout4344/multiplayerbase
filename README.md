@@ -1,2 +1,2 @@
-# multiplayerbase
- base multiplayer project for GodotSteam
+# MultiplayerBase
+ Base Multiplayer project for GodotSteam games
